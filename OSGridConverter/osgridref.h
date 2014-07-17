@@ -5,6 +5,14 @@ class OSGridRef
 {
 public:
     OSGridRef();
+    void convertOSGridRefToLatLon();
+
+private:
+    int easting;
+    int northing;
+
+    double latitude;
+    double longitude;
 };
 
 #endif // OSGRIDREF_H
