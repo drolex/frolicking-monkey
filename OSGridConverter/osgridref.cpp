@@ -10,6 +10,11 @@ OSGridRef::OSGridRef()
 
     latitude = 0;
     longitude = 0;
+
+    setGridCoords("SK123456");
+
+    gridcoords.resize(12);
+    gridsquare.resize(2);
 }
 
 void OSGridRef::convertOSGridRefToLatLon()
@@ -78,4 +83,102 @@ void OSGridRef::convertOSGridRefToLatLon()
     latitude = phi * 180.0 / PI;
     longitude = lambda * 180.0 / PI;
 
+}
+
+void OSGridRef::splitGridCoords()
+{
+    if ( gridcoords.length() == 8 )
+    {
+        gridsquare = gridcoords;
+        gridsquare.truncate(2);
+
+        QString e = gridcoords;
+        e.mid(2,3);
+
+        QString n = gridcoords;
+        n.mid(5,3);
+
+        bool ok;
+        easting = e.toInt(&ok, 10);
+        northing = n.toInt(&ok, 10);
+    }
+
+    if ( gridcoords.length() == 10 )
+    {
+        gridsquare = gridcoords;
+        gridsquare.truncate(2);
+
+        QString e = gridcoords;
+        e.mid(2,4);
+
+        QString n = gridcoords;
+        n.mid(6,4);
+
+        bool ok;
+        easting = e.toInt(&ok, 10);
+        northing = n.toInt(&ok, 10);
+    }
+
+    if ( gridcoords.length() == 12 )
+    {
+        gridsquare = gridcoords;
+        gridsquare.truncate(2);
+
+        QString e = gridcoords;
+        e.mid(2,5);
+
+        QString n = gridcoords;
+        n.mid(7,5);
+
+        bool ok;
+        easting = e.toInt(&ok, 10);
+        northing = n.toInt(&ok, 10);
+    }
+}
+
+//sets/gets
+void OSGridRef::setLatitude(double lat)
+{
+    latitude = lat;
+}
+
+void OSGridRef::setLongitude(double lon)
+{
+    longitude = lon;
+}
+
+void OSGridRef::setEasting(int eas)
+{
+    easting = eas;
+}
+
+void OSGridRef::setNorthing(int nor)
+{
+    northing = nor;
+}
+
+void OSGridRef::setGridCoords(QString gc)
+{
+    gridcoords = gc;
+}
+
+
+double OSGridRef::getLatitude()
+{
+    return latitude;
+}
+
+double OSGridRef::getLongitude()
+{
+    return longitude;
+}
+
+int OSGridRef::getEasting()
+{
+    return easting;
+}
+
+int OSGridRef::getNorthing()
+{
+    return northing;
 }

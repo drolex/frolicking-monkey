@@ -9,31 +9,28 @@
 
 MainWindow::MainWindow()
 {
-
     //OS Grid coordinates input
     QGroupBox *gridCoordsGroup = new QGroupBox(tr("OS Grid Coordinates"));
-    QLabel *gridCoordsLabel = new QLabel(tr("Grid Square:"));
+    QLabel *gridCoordsLabel = new QLabel(tr("Grid Coordinates:"));
 
-    QLineEdit *gridCoordsLineEdit = new QLineEdit;
-    gridCoordsLineEdit->setPlaceholderText("Placeholder Text");
+    gridCoordsLineEdit = new QLineEdit;
+    gridCoordsLineEdit->setPlaceholderText("e.g. SK123457890");
     gridCoordsLineEdit->setFocus();
 
     //Conversion button
     convertButton = new QPushButton("Convert");
-    connect(convertButton, SIGNAL(clicked()),this, SLOT(convert()));
-
+    connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
 
     //Latitude/longitude output
     QGroupBox *latLonGroup = new QGroupBox(tr("Latitude and longitude"));
     QLabel *latitudeLabel = new QLabel(tr("Latitude:"));
     QLabel *longitudeLabel = new QLabel(tr("Longitude:"));
 
-    QLineEdit *latitudeLineEdit = new QLineEdit;
-    latitudeLineEdit->setPlaceholderText("Placeholder Text");
-    latitudeLineEdit->setFocus();
-    QLineEdit *longitudeLineEdit = new QLineEdit;
-    longitudeLineEdit->setPlaceholderText("Placeholder Text");
-    longitudeLineEdit->setFocus();
+    QString latText = QString::number(gridRef.getLatitude());
+    QString lonText = QString::number(gridRef.getLongitude());
+
+    latitudeResult = new QLabel(latText);
+    longitudeResult = new QLabel(lonText);
 
     //Layout
     QGridLayout *gridCoordsLayout = new QGridLayout;
@@ -43,9 +40,9 @@ MainWindow::MainWindow()
 
     QGridLayout *latLonLayout = new QGridLayout;
     latLonLayout->addWidget(latitudeLabel, 0, 0);
-    latLonLayout->addWidget(latitudeLineEdit, 0, 1);
+    latLonLayout->addWidget(latitudeResult, 0, 1);
     latLonLayout->addWidget(longitudeLabel, 1, 0);
-    latLonLayout->addWidget(longitudeLineEdit, 1, 1);
+    latLonLayout->addWidget(longitudeResult, 1, 1);
     latLonGroup->setLayout(latLonLayout);
 
     QGridLayout *layout = new QGridLayout;
@@ -59,7 +56,12 @@ MainWindow::MainWindow()
 
 void MainWindow::convert()
 {
-    OSGridRef gridRef;
-
+    gridRef.setGridCoords(gridCoordsLineEdit->text());
     gridRef.convertOSGridRefToLatLon();
+
+    QString latText = QString::number(gridRef.getLatitude());
+    QString lonText = QString::number(gridRef.getLongitude());
+
+    latitudeResult->setText(latText);
+    longitudeResult->setText(lonText);
 }
