@@ -87,20 +87,16 @@ void OSGridRef::convertOSGridRefToLatLon()
 
 void OSGridRef::splitGridCoords()
 {
+    QString e, n;
+
     if ( gridcoords.length() == 8 )
     {
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
-        QString e = gridcoords;
-        e.mid(2,3);
+        e = gridcoords.mid(2,3);
+        n = gridcoords.mid(5,3);
 
-        QString n = gridcoords;
-        n.mid(5,3);
-
-        bool ok;
-        easting = e.toInt(&ok, 10);
-        northing = n.toInt(&ok, 10);
     }
 
     if ( gridcoords.length() == 10 )
@@ -108,15 +104,8 @@ void OSGridRef::splitGridCoords()
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
-        QString e = gridcoords;
-        e.mid(2,4);
-
-        QString n = gridcoords;
-        n.mid(6,4);
-
-        bool ok;
-        easting = e.toInt(&ok, 10);
-        northing = n.toInt(&ok, 10);
+        e = gridcoords.mid(2,4);
+        n = gridcoords.mid(6,4);
     }
 
     if ( gridcoords.length() == 12 )
@@ -124,16 +113,63 @@ void OSGridRef::splitGridCoords()
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
-        QString e = gridcoords;
-        e.mid(2,5);
-
-        QString n = gridcoords;
-        n.mid(7,5);
-
-        bool ok;
-        easting = e.toInt(&ok, 10);
-        northing = n.toInt(&ok, 10);
+        e = gridcoords.mid(2,5);
+        n = gridcoords.mid(7,5);
     }
+
+    bool ok;
+    easting = e.toInt(&ok, 10);
+    northing = n.toInt(&ok, 10);
+
+    // append numeric part of references to grid index:
+    // normalise to 1m grid, rounding up to centre of grid square:
+
+    switch(gridcoords.length())
+    {
+    case 12:
+        easting += grideasting * 100000;
+        northing += gridnorthing * 100000;
+        break;
+    case 10:
+        easting = easting * 10 + grideasting * 100000 + 5;
+        northing = northing * 10 + gridnorthing * 100000 + 5;
+        break;
+    case 8:
+        easting = easting * 100 + grideasting * 100000 + 50;
+        northing = northing * 100 + gridnorthing * 100000 + 50;
+        break;
+    case 6:
+        easting = easting * 1000 + grideasting * 100000 + 500;
+        northing = northing * 1000 + gridnorthing * 100000 + 500;
+        break;
+    }
+
+}
+
+void OSGridRef::parseRefToNumeric()
+{
+    //take first 2 characters e.g. "SK"
+    //converts to numbers
+    //A->0, B->1 ... H->8
+    //I is removed
+    //J->9 ... Z->25
+
+    int n1 = gridcoords.at(0).toLatin1() - 65;
+    int n2 = gridcoords.at(1).toLatin1() - 65;
+
+    if( n1 > 8 )
+    {
+        n1--;
+    }
+
+    if( n2 > 8 )
+    {
+        n2--;
+    }
+
+    // convert grid letters into 100km-square indexes from false origin (grid square SV):
+    grideasting = ((n1-2)%5)*5 + (n2%5);
+    gridnorthing = (19 - floor(double(n1)/5)*5) - floor(double(n2)/5);
 }
 
 //sets/gets

@@ -57,6 +57,8 @@ MainWindow::MainWindow()
 void MainWindow::convert()
 {
     gridRef.setGridCoords(gridCoordsLineEdit->text());
+    gridRef.parseRefToNumeric();
+    gridRef.splitGridCoords();
     gridRef.convertOSGridRefToLatLon();
 
     QString latText = QString::number(gridRef.getLatitude());

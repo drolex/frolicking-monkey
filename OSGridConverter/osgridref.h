@@ -9,6 +9,7 @@ public:
     OSGridRef();
     void convertOSGridRefToLatLon();
     void splitGridCoords();
+    void parseRefToNumeric();
 
     void setLatitude(double lat);
     void setLongitude (double lon);
@@ -27,6 +28,9 @@ private:
 
     int easting;
     int northing;
+
+    int grideasting;
+    int gridnorthing;
 
     double latitude;
     double longitude;

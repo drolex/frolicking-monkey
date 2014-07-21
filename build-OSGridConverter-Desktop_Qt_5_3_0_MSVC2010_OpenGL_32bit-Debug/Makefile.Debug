@@ -61,26 +61,6 @@ DESTDIR_TARGET = debug\OSGridConverter.exe
 
 .SUFFIXES: .c .cpp .cc .cxx
 
-{.}.cpp{debug\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
-	$<
-<<
-
-{.}.cc{debug\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
-	$<
-<<
-
-{.}.cxx{debug\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
-	$<
-<<
-
-{.}.c{debug\}.obj::
-	$(CC) -c $(CFLAGS) $(INCPATH) -Fodebug\ @<<
-	$<
-<<
-
 {debug}.cpp{debug\}.obj::
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
 	$<
@@ -97,6 +77,26 @@ DESTDIR_TARGET = debug\OSGridConverter.exe
 <<
 
 {debug}.c{debug\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{.}.cpp{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{.}.cc{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{.}.cxx{debug\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Fodebug\ @<<
+	$<
+<<
+
+{.}.c{debug\}.obj::
 	$(CC) -c $(CFLAGS) $(INCPATH) -Fodebug\ @<<
 	$<
 <<
@@ -286,6 +286,10 @@ debug\moc_mainwindow.cpp: C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QMainWindo
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QPushButton \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qpushbutton.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QLabel \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qlabel.h \
+		..\OSGridConverter\osgridref.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\QString \
 		..\OSGridConverter\mainwindow.h
 	C:\Qt\5.3\msvc2010_opengl\bin\moc.exe $(DEFINES) -D_MSC_VER=1600 -D_WIN32 -IC:/Qt/5.3/msvc2010_opengl/mkspecs/win32-msvc2010 -IC:/Users/alexandre.bourdeu/Documents/GitHub/frolicking-monkey/OSGridConverter -IC:/Qt/5.3/msvc2010_opengl/include -IC:/Qt/5.3/msvc2010_opengl/include/QtWidgets -IC:/Qt/5.3/msvc2010_opengl/include/QtGui -IC:/Qt/5.3/msvc2010_opengl/include/QtCore -I. ..\OSGridConverter\mainwindow.h -o debug\moc_mainwindow.cpp
 
@@ -425,7 +429,11 @@ debug\main.obj: ..\OSGridConverter\main.cpp C:\Qt\5.3\msvc2010_opengl\include\Qt
 		C:\Qt\5.3\msvc2010_opengl\include\QtGui\qtextoption.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QPushButton \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qpushbutton.h \
-		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qabstractbutton.h
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qabstractbutton.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QLabel \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qlabel.h \
+		..\OSGridConverter\osgridref.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\QString
 
 debug\mainwindow.obj: ..\OSGridConverter\mainwindow.cpp ..\OSGridConverter\mainwindow.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QMainWindow \
@@ -541,18 +549,55 @@ debug\mainwindow.obj: ..\OSGridConverter\mainwindow.cpp ..\OSGridConverter\mainw
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QPushButton \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qpushbutton.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qabstractbutton.h \
-		..\OSGridConverter\osgridref.h \
-		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QGroupBox \
-		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qgroupbox.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QLabel \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qlabel.h \
+		..\OSGridConverter\osgridref.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\QString \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QGroupBox \
+		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qgroupbox.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\QGridLayout \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qgridlayout.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qlayout.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qlayoutitem.h \
 		C:\Qt\5.3\msvc2010_opengl\include\QtWidgets\qboxlayout.h
 
-debug\osgridref.obj: ..\OSGridConverter\osgridref.cpp ..\OSGridConverter\osgridref.h
+debug\osgridref.obj: ..\OSGridConverter\osgridref.cpp ..\OSGridConverter\osgridref.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\QString \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qstring.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qchar.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qglobal.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qconfig.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qfeatures.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qsystemdetection.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qprocessordetection.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qcompilerdetection.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qtypeinfo.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qtypetraits.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qsysinfo.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qlogging.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qflags.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qbasicatomic.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_bootstrap.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qgenericatomic.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_msvc.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_armv7.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_armv6.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_armv5.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_ia64.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_mips.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_x86.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_cxx11.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_gcc.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qatomic_unix.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qglobalstatic.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qmutex.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qnumeric.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qbytearray.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qrefcount.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qnamespace.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qarraydata.h \
+		C:\Qt\5.3\msvc2010_opengl\include\QtCore\qstringbuilder.h
 
 debug\moc_mainwindow.obj: debug\moc_mainwindow.cpp 
 
