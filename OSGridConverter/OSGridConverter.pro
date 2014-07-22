@@ -8,3 +8,7 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     osgridref.h
+
+OTHER_FILES +=
+
+RESOURCES +=

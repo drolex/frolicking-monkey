@@ -13,7 +13,7 @@
 
 /**************************************************************/
 /* Conversion of OS Grid reference coordinates                */
-/* to latitude and longitude and vice versa                   */
+/* to latitude and longitude                                  */
 /**************************************************************/
 
 #include <QApplication>
@@ -22,8 +22,6 @@
 
 int main(int argc, char *argv[])
 {
-    //Q_INIT_RESOURCE(application);
-
     QApplication app(argc, argv);
     MainWindow mainWin;
     mainWin.show();
