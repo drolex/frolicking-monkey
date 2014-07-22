@@ -46,7 +46,6 @@ MainWindow::MainWindow()
                         min-width: 80px; \
                         min-height: 30px; \
                         font-weight: bold; \
-                        font-size: 12pt; } \
                     QPushButton:pressed { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa);} \
                     QPushButton:flat { border: none;} \
                     QPushButton:default { border-color: navy; } ");
@@ -61,7 +60,7 @@ MainWindow::MainWindow()
     gridCoordsLineEdit->setFocus();
 
     //Conversion button
-    convertButton = new QPushButton("Convert");
+    convertButton = new QPushButton("\nConvert\n");
     connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
 
     //Latitude/longitude output
