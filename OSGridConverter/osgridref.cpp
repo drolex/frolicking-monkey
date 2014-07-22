@@ -11,17 +11,19 @@ OSGridRef::OSGridRef()
     latitude = 0;
     longitude = 0;
 
-    setGridCoords("SK123456");
-
-    gridcoords.resize(12);
-    gridsquare.resize(2);
+    //gridcoords.resize(12);
+    //gridsquare.resize(2);
 }
 
+//where the actual calculation takes place
+//converts numerical grid reference
+//to decimal longitude and latitude
 void OSGridRef::convertOSGridRefToLatLon()
 {
     double N = northing;
     double E = easting;
 
+    //bunch of constants
     // Airy 1830 major & minor semi-axes
     double a = 6377563.396;
     double b = 6356256.909;
@@ -82,13 +84,15 @@ void OSGridRef::convertOSGridRefToLatLon()
 
     latitude = phi * 180.0 / PI;
     longitude = lambda * 180.0 / PI;
-
 }
 
+//split the numerical OS grid (e.g. 31233456)
+//in eastings and northings
 void OSGridRef::splitGridCoords()
 {
     QString e, n;
 
+    //split depending on the size of the string
     if ( gridcoords.length() == 8 )
     {
         gridsquare = gridcoords;
@@ -123,7 +127,6 @@ void OSGridRef::splitGridCoords()
 
     // append numeric part of references to grid index:
     // normalise to 1m grid, rounding up to centre of grid square:
-
     switch(gridcoords.length())
     {
     case 12:
@@ -146,9 +149,11 @@ void OSGridRef::splitGridCoords()
 
 }
 
+//convert grid letters to numerical
+//e.g. SJ123456 -> 31233456
 void OSGridRef::parseRefToNumeric()
 {
-    //take first 2 characters e.g. "SK"
+    //take first 2 characters e.g. "SJ"
     //converts to numbers
     //A->0, B->1 ... H->8
     //I is removed

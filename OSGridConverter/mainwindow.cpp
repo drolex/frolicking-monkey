@@ -56,7 +56,15 @@ MainWindow::MainWindow()
 
 void MainWindow::convert()
 {
-    gridRef.setGridCoords(gridCoordsLineEdit->text());
+    QString string = gridCoordsLineEdit->text();
+    //remove spaces
+    string = string.simplified();
+    string = string.replace(" ","");
+
+    //to upper-case
+    string = string.toUpper();
+
+    gridRef.setGridCoords(string);
     gridRef.parseRefToNumeric();
     gridRef.splitGridCoords();
     gridRef.convertOSGridRefToLatLon();
