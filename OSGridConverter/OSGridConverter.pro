@@ -9,6 +9,9 @@ HEADERS += \
     mainwindow.h \
     osgridref.h
 
-OTHER_FILES +=
+OTHER_FILES += \
+    android/AndroidManifest.xml
 
 RESOURCES +=
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
