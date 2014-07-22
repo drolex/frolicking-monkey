@@ -111,32 +111,36 @@ void OSGridRef::splitGridCoords()
     QString e, n;
 
     //split depending on the size of the string
-    if ( gridcoords.length() == 8 )
+    switch(gridcoords.length())
     {
+    case 6:
+        gridsquare = gridcoords;
+        gridsquare.truncate(2);
+
+        e = gridcoords.mid(2,2);
+        n = gridcoords.mid(4,2);
+        break;
+    case 8:
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
         e = gridcoords.mid(2,3);
         n = gridcoords.mid(5,3);
-
-    }
-
-    if ( gridcoords.length() == 10 )
-    {
+        break;
+    case 10:
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
         e = gridcoords.mid(2,4);
         n = gridcoords.mid(6,4);
-    }
-
-    if ( gridcoords.length() == 12 )
-    {
+        break;
+    case 12:
         gridsquare = gridcoords;
         gridsquare.truncate(2);
 
         e = gridcoords.mid(2,5);
         n = gridcoords.mid(7,5);
+        break;
     }
 
     bool ok;

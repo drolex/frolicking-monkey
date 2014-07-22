@@ -69,11 +69,8 @@ MainWindow::MainWindow()
     QLabel *latitudeLabel = new QLabel(tr("Latitude:"));
     QLabel *longitudeLabel = new QLabel(tr("Longitude:"));
 
-    QString latText = QString::number(gridRef.getLatitude());
-    QString lonText = QString::number(gridRef.getLongitude());
-
-    latitudeResult = new QLabel(latText);
-    longitudeResult = new QLabel(lonText);
+    latitudeResult = new QLabel("-");
+    longitudeResult = new QLabel("-");
 
     //Layout
     QGridLayout *gridCoordsLayout = new QGridLayout;
@@ -107,14 +104,60 @@ void MainWindow::convert()
     //to upper-case
     string = string.toUpper();
 
-    gridRef.setGridCoords(string);
-    gridRef.parseRefToNumeric();
-    gridRef.splitGridCoords();
-    gridRef.convertOSGridRefToLatLon();
+    bool inputisright = 1;
+    //check non empty string
+    if( string.isEmpty() == 1 ) inputisright = 0;
+    else
+    {
+        //check 2 first characters are letters
+        if( string.at(0).isUpper() == 0 ) inputisright = 0;
+        if( string.at(1).isUpper() == 0 ) inputisright = 0;
 
-    QString latText = QString::number(gridRef.getLatitude());
+        //check length of string is 6, 8, 10 or 12
+        if( string.length() != 6 && string.length() != 8 && string.length() != 10 && string.length() != 12 )
+        {
+            inputisright = 0;
+        }
+
+        //check other characters are numbers
+        for( int i = 2; i < string.length() ; i++ )
+        {
+            if( string.at(i).isNumber() == 0 ) inputisright = 0;
+        }
+    }
+
+    if( inputisright == 0 )
+    {
+        latitudeResult->setText("NaN");
+        longitudeResult->setText("NaN");
+    }
+    else
+    {
+        gridRef.setGridCoords(string);
+        gridRef.parseRefToNumeric();
+        gridRef.splitGridCoords();
+        gridRef.convertOSGridRefToLatLon();
+
+        QString latText = QString::number(gridRef.getLatitude());
+        QString lonText = QString::number(gridRef.getLongitude());
+
+        latitudeResult->setText(latText);
+        longitudeResult->setText(lonText);
+    }
+
+
+
+    /*QString latText = QString::number(gridRef.getLatitude());
     QString lonText = QString::number(gridRef.getLongitude());
 
-    latitudeResult->setText(latText);
-    longitudeResult->setText(lonText);
+    if( gridRef.getRightInput() == 0 )
+    {
+        latitudeResult->setText("NaN");
+        longitudeResult->setText("NaN");
+    }
+    else
+    {
+        latitudeResult->setText(latText);
+        longitudeResult->setText(lonText);
+    }*/
 }
