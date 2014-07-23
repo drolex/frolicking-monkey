@@ -26,11 +26,11 @@ OSGridRef::OSGridRef()
     easting = 0;
     northing = 0;
 
+    grideasting = 0;
+    gridnorthing = 0;
+
     latitude = 0;
     longitude = 0;
-
-    //gridcoords.resize(12);
-    //gridsquare.resize(2);
 }
 
 //where the actual calculation takes place
@@ -168,7 +168,6 @@ void OSGridRef::splitGridCoords()
         northing = northing * 1000 + gridnorthing * 100000 + 500;
         break;
     }
-
 }
 
 //convert grid letters to numerical
@@ -200,31 +199,10 @@ void OSGridRef::parseRefToNumeric()
 }
 
 //sets/gets
-void OSGridRef::setLatitude(double lat)
-{
-    latitude = lat;
-}
-
-void OSGridRef::setLongitude(double lon)
-{
-    longitude = lon;
-}
-
-void OSGridRef::setEasting(int eas)
-{
-    easting = eas;
-}
-
-void OSGridRef::setNorthing(int nor)
-{
-    northing = nor;
-}
-
 void OSGridRef::setGridCoords(QString gc)
 {
     gridcoords = gc;
 }
-
 
 double OSGridRef::getLatitude()
 {
@@ -236,12 +214,3 @@ double OSGridRef::getLongitude()
     return longitude;
 }
 
-int OSGridRef::getEasting()
-{
-    return easting;
-}
-
-int OSGridRef::getNorthing()
-{
-    return northing;
-}
