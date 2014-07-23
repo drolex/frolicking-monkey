@@ -146,6 +146,9 @@ void MainWindow::convert()
     {
         latitudeResult->setText("NaN");
         longitudeResult->setText("NaN");
+
+        arcLatitudeResult->setText("NaN");
+        arcLongitudeResult->setText("NaN");
     }
     else
     {
