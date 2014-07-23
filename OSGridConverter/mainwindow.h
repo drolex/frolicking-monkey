@@ -41,6 +41,8 @@ private:
     OSGridRef gridRef;
     QLabel *latitudeResult;
     QLabel *longitudeResult;
+    QLabel *arcLatitudeResult;
+    QLabel *arcLongitudeResult;
 
 };
 

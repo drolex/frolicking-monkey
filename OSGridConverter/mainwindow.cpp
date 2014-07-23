@@ -18,6 +18,7 @@
 
 #include "mainwindow.h"
 #include "osgridref.h"
+#include "math.h"
 
 #include <QGroupBox>
 #include <QLabel>
@@ -63,13 +64,21 @@ MainWindow::MainWindow()
     convertButton = new QPushButton("\nConvert\n");
     connect(convertButton, SIGNAL(clicked()), this, SLOT(convert()));
 
-    //Latitude/longitude output
-    QGroupBox *latLonGroup = new QGroupBox(tr("Latitude and longitude"));
+    //Decimal latitude/longitude output
+    QGroupBox *latLonGroup = new QGroupBox(tr("Latitude and longitude (decimal)"));
     QLabel *latitudeLabel = new QLabel(tr("Latitude:"));
     QLabel *longitudeLabel = new QLabel(tr("Longitude:"));
 
     latitudeResult = new QLabel("-");
     longitudeResult = new QLabel("-");
+
+    //Deg/min/sec latitude/longitude output
+    QGroupBox *arcLatLonGroup = new QGroupBox(tr("Latitude and longitude (deg/min/sec)"));
+    QLabel *arcLatitudeLabel = new QLabel(tr("Latitude:"));
+    QLabel *arcLongitudeLabel = new QLabel(tr("Longitude:"));
+
+    arcLatitudeResult = new QLabel("-");
+    arcLongitudeResult = new QLabel("-");
 
     //Layout
     QGridLayout *gridCoordsLayout = new QGridLayout;
@@ -84,10 +93,18 @@ MainWindow::MainWindow()
     latLonLayout->addWidget(longitudeResult, 1, 1);
     latLonGroup->setLayout(latLonLayout);
 
+    QGridLayout *arcLatLonLayout = new QGridLayout;
+    arcLatLonLayout->addWidget(arcLatitudeLabel, 0, 0);
+    arcLatLonLayout->addWidget(arcLatitudeResult, 0, 1);
+    arcLatLonLayout->addWidget(arcLongitudeLabel, 1, 0);
+    arcLatLonLayout->addWidget(arcLongitudeResult, 1, 1);
+    arcLatLonGroup->setLayout(arcLatLonLayout);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(gridCoordsGroup, 0, 0);
     layout->addWidget(convertButton, 1, 0);
     layout->addWidget(latLonGroup, 2, 0);
+    layout->addWidget(arcLatLonGroup, 3, 0);
     setLayout(layout);
 
     setWindowTitle(tr("OS Grid Conversion"));
@@ -142,21 +159,53 @@ void MainWindow::convert()
 
         latitudeResult->setText(latText);
         longitudeResult->setText(lonText);
+
+        //convert decimal latitude/longitude to degrees, minutes, seconds
+        int deg;
+        int min;
+        double sec;
+        double lat = latText.toDouble();
+        int signlat = lat > 0 ? 1 : -1;
+
+        lat = lat * signlat;
+
+        deg = floor(lat);
+        min = floor( ( lat - deg) * 60 );
+        sec = ( ( ( lat - deg ) * 60 ) - min ) * 60;
+
+        QString arcLatText = "";
+        QString dir = signlat > 0 ? "N" : "S";
+        arcLatText.append(QString::number(deg));
+        arcLatText.append("° ");
+        arcLatText.append(QString::number(min));
+        arcLatText.append("\' ");
+        arcLatText.append(QString::number(sec));
+        arcLatText.append("\'\' ");
+        arcLatText.append(dir);
+
+        arcLatitudeResult->setText(arcLatText);
+
+        double lon = lonText.toDouble();
+        int signlon = lon > 0 ? 1 : -1;
+
+        lon = lon * signlon;
+
+        deg = floor(lon);
+        min = floor( ( lon - deg) * 60 );
+        sec = ( ( ( lon - deg ) * 60 ) - min ) * 60;
+
+        QString arcLonText = "";
+        dir = signlon > 0 ? "E" : "W";
+        arcLonText.append(QString::number(deg));
+        arcLonText.append("° ");
+        arcLonText.append(QString::number(min));
+        arcLonText.append("\' ");
+        arcLonText.append(QString::number(sec));
+        arcLonText.append("\'\' ");
+        arcLonText.append(dir);
+
+        arcLongitudeResult->setText(arcLonText);
+
     }
-
-
-
-    /*QString latText = QString::number(gridRef.getLatitude());
-    QString lonText = QString::number(gridRef.getLongitude());
-
-    if( gridRef.getRightInput() == 0 )
-    {
-        latitudeResult->setText("NaN");
-        longitudeResult->setText("NaN");
-    }
-    else
-    {
-        latitudeResult->setText(latText);
-        longitudeResult->setText(lonText);
-    }*/
 }
+
